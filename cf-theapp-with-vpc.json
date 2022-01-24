@@ -278,7 +278,7 @@
                 "command" : "pip-3.8 install flask boto3"
               },
               "run_python_script" : {
-                "command" : "cd /opt && python3 flask.py &",
+                "command" : "cd /opt && nohup python3 app.py > log.txt 2>&1 &",
                 "env" : {
                   "ACCESS_KEY" : { "Ref" : "AccessKey" },
                   "ACCESS_SECRET" : { "Ref" : "SecretKey" },
