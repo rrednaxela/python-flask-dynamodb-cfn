@@ -3,11 +3,13 @@ import boto3
 import time
 import uuid
 import os
+from flask import Flask
 
 
 # Get environment variables
 access_key = os.getenv('ACCESS_KEY')
 access_secret = os.environ.get('ACCESS_SECRET')
+region_name = os.environ.get('REGION_NAME')
 
 #connect dynamodb
 session = boto3.Session(
@@ -18,8 +20,6 @@ session = boto3.Session(
 dynamodb = session.resource('dynamodb')
 
 def put_request(message):
-
-    # dynamodb = boto3.resource('dynamodb', endpoint_url="https://dynamodb.eu-west-1.amazonaws.com")
 
     table = dynamodb.Table('requests')
     response = table.put_item(
@@ -34,3 +34,9 @@ def put_request(message):
 result = put_request("hello world from ec2")
 
 print(json.dumps(result))
+
+app = Flask(__name__)
+
+@app.route('/api/hello_world')
+def hello_world():
+    return 'Hello, World!'

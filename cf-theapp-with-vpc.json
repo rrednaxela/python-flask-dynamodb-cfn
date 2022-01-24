@@ -278,8 +278,10 @@
               },
               "run_python_script" : {
                 "command" : "cd /opt/python-flask-dynamodb-cfn && python3 flask.py &",
-                "env" : { "ACCESS_KEY" : { "Ref" : "AccessKey" },
-                  "ACCESS_SECRET" : { "Ref" : "SecretKey" }
+                "env" : {
+                  "ACCESS_KEY" : { "Ref" : "AccessKey" },
+                  "ACCESS_SECRET" : { "Ref" : "SecretKey" },
+                  "REGION_NAME" : { "Ref" : "AWS::Region" }
                 }
               }
             }
