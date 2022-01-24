@@ -8,6 +8,7 @@
     "KeyName": {
       "Description" : "Name of an existing EC2 KeyPair to enable SSH access to the instances",
       "Type": "AWS::EC2::KeyPair::KeyName",
+      "MinLength" : "1",
       "ConstraintDescription" : "must be the name of an existing EC2 KeyPair."
     },
 
@@ -277,7 +278,7 @@
                 "command" : "pip-3.8 install flask boto3"
               },
               "run_python_script" : {
-                "command" : "cd /opt/python-flask-dynamodb-cfn && python3 flask.py &",
+                "command" : "cd /opt && python3 flask.py &",
                 "env" : {
                   "ACCESS_KEY" : { "Ref" : "AccessKey" },
                   "ACCESS_SECRET" : { "Ref" : "SecretKey" },

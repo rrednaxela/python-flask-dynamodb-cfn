@@ -9,13 +9,13 @@ from flask import Flask
 # Get environment variables
 access_key = os.getenv('ACCESS_KEY')
 access_secret = os.environ.get('ACCESS_SECRET')
-region_name = os.environ.get('REGION_NAME')
+aws_region_name = os.environ.get('REGION_NAME')
 
 #connect dynamodb
 session = boto3.Session(
     aws_access_key_id=access_key,
     aws_secret_access_key=access_secret,
-    region_name="eu-west-3",
+    region_name=aws_region_name,
 )
 dynamodb = session.resource('dynamodb')
 
