@@ -31,6 +31,6 @@ def put_request(message):
     )
     return response
 
-result = put_request("hello world")
+result = put_request("hello world from ec2")
 
 print(json.dumps(result))
