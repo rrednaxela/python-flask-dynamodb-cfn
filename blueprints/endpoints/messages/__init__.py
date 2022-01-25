@@ -4,7 +4,6 @@ import uuid
 import os
 from flask import request
 from flask_restx import Namespace, Resource, fields
-from http import HTTPStatus
 
 
 # Get environment variables
@@ -89,7 +88,7 @@ class messages(Resource):
     @namespace.response(400, 'Message text is invalid or empty')
     @namespace.response(500, 'Internal Server error')
     @namespace.expect(Message_model)
-    @namespace.marshal_with(Message_model, code=HTTPStatus.CREATED)
+    @namespace.marshal_with(Message_model, code=201)
     def post(self):
         '''Create a new Message'''
 
