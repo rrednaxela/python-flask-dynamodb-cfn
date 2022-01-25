@@ -44,7 +44,7 @@ Message_model = namespace.model('Message', {
         readonly=True,
         description='Message identifier'
     ),
-    'timestamp': fields.int(
+    'timestamp': fields.Integer(
         readonly=True,
         description='Message timestamp'
     ),
