@@ -2,6 +2,7 @@
 from flask import Blueprint
 from flask_restx import Api
 from blueprints.endpoints.hello_world import namespace as hello_world_ns
+from blueprints.endpoints.messages import namespace as messages_ns
 
 blueprint = Blueprint('api', __name__, url_prefix='/api')
 
@@ -14,3 +15,4 @@ api_extension = Api(
 )
 
 api_extension.add_namespace(hello_world_ns)
+api_extension.add_namespace(messages_ns)
