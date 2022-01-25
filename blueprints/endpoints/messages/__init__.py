@@ -1,4 +1,3 @@
-import json
 import boto3
 import time
 import uuid
@@ -75,14 +74,19 @@ class messages(Resource):
     @namespace.marshal_list_with(Message_list_model)
     def get(self):
         '''List with all the messages'''
-        Message_list = table.query()
+        try:
+            query = table.scan()
+            Message_list = query['Items']
+        except Exception as err:
+            print(f"Unexpected {err=}, {type(err)=}")
+            namespace.abort(500, 'Internal Server error')
 
         return {
-            'messages': Message_list['Items'],
+            'messages': Message_list,
             'total_records': len(Message_list)
         }
 
-    @namespace.response(400, 'Message with the given name already exists')
+    @namespace.response(400, 'Message text is invalid or empty')
     @namespace.response(500, 'Internal Server error')
     @namespace.expect(Message_model)
     @namespace.marshal_with(Message_model, code=HTTPStatus.CREATED)
