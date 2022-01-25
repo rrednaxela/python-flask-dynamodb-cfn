@@ -96,7 +96,7 @@ class messages(Resource):
 
         return response, 201
 
-@namespace.route('/<String:Message_id>')
+@namespace.route('/<string:Message_id>')
 class Message(Resource):
     '''Read, update and delete a specific Message'''
 
