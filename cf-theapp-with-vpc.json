@@ -275,7 +275,7 @@
           "run_app" : {
             "commands" : {
               "pips" : {
-                "command" : "pip-3.8 install flask boto3"
+                "command" : "pip-3.8 install flask boto3 flask-restx Werkzeug"
               },
               "run_python_script" : {
                 "command" : "cd /opt && nohup python3 app.py > log.txt 2>&1 &",
