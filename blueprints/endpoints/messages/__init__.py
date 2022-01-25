@@ -21,15 +21,17 @@ dynamodb = session.resource('dynamodb')
 table = dynamodb.Table('requests')
 
 
-def put_request(message):    
-    response = table.put_item(
+def put_request(message):
+    the_id = str(uuid.uuid4())
+    timestamp = int(time.time())
+    table.put_item(
        Item={
-           'uuid': str(uuid.uuid4()),
-            'timestamp': int(time.time()),
+            'uuid': the_id,
+            'timestamp': timestamp,
             'text': message
         }
     )
-    return response
+    return {'uuid': the_id, 'timestamp': timestamp, 'text': message}
 
 result = put_request("hello world from ec2")
 
@@ -63,7 +65,7 @@ Message_list_model = namespace.model('MessageList', {
     ),
 })
 
-Message_example = {'uuid': '5949b02d-1375-4741-b7dd-24c67ff9bcf5', 'name': 'Hello World!'}
+Message_example = {'uuid': '7d39c434-f6ee-4ec1-b067-2ae7cccc07a8', 'timestamp': 1643141109, 'text': 'hello world from aws'}
 
 @namespace.route('')
 class messages(Resource):
@@ -107,7 +109,7 @@ class Message(Resource):
     @namespace.response(500, 'Internal Server error')
     @namespace.marshal_with(Message_model)
     def get(self, Message_id):
-        '''Get Message_example information'''
+        '''Get a single message'''
 
         return Message_example
 
