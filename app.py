@@ -41,7 +41,7 @@ app = Flask(__name__)
 #def hello_world():
 #    return 'Hello, World!'
 
-app.config['RESTPLUS_MASK_SWAGGER'] = False
+app.config['RESTX_MASK_SWAGGER'] = False
 
 app.register_blueprint(endpoint)
 

@@ -1,6 +1,6 @@
 
 from flask import Blueprint
-from flask_restplus import Api
+from flask_restx import Api
 from blueprints.endpoints.hello_world import namespace as hello_world_ns
 
 blueprint = Blueprint('api', __name__, url_prefix='/api')
