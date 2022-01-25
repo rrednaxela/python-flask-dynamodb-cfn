@@ -31,6 +31,16 @@
       "ConstraintDescription": "must be a valid IP CIDR range of the form x.x.x.x/x."
     },
 
+    "DynamoTableName": {
+      "Description": "The name of the Dynamo DB Table to be created",
+      "Type": "String",
+      "MinLength": "3",
+      "MaxLength": "255",
+      "Default": "requests",
+      "AllowedPattern": "[a-zA-Z0-9]*",
+      "ConstraintDescription": "must contain only alphanumeric characters."
+    },
+
     "AccessKey" : {
       "NoEcho": "true",
       "Description" : "The access key allowed to read/write dynamoDB",
@@ -282,7 +292,8 @@
                 "env" : {
                   "ACCESS_KEY" : { "Ref" : "AccessKey" },
                   "ACCESS_SECRET" : { "Ref" : "SecretKey" },
-                  "REGION_NAME" : { "Ref" : "AWS::Region" }
+                  "REGION_NAME" : { "Ref" : "AWS::Region" },
+                  "TABLE_NAME" : { "Ref" : "DynamoTableName"}
                 }
               }
             }
@@ -326,20 +337,12 @@
           {
             "AttributeName": "uuid",
             "AttributeType": "S"
-          },
-          {
-            "AttributeName": "timestamp",
-            "AttributeType": "N"
           }
         ],
         "KeySchema": [
           {
             "AttributeName": "uuid",
             "KeyType": "HASH"
-          },
-          {
-            "AttributeName": "timestamp",
-            "KeyType": "RANGE"
           }
         ],
         "ProvisionedThroughput": {

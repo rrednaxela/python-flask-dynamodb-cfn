@@ -10,6 +10,7 @@ from flask_restx import Namespace, Resource, fields
 access_key = os.getenv('ACCESS_KEY')
 access_secret = os.environ.get('ACCESS_SECRET')
 aws_region_name = os.environ.get('REGION_NAME')
+table_name = os.environ.get('TABLE_NAME')
 
 #connect dynamodb
 session = boto3.Session(
@@ -18,7 +19,7 @@ session = boto3.Session(
     region_name=aws_region_name,
 )
 dynamodb = session.resource('dynamodb')
-table = dynamodb.Table('requests')
+table = dynamodb.Table(table_name)
 
 
 def put_request(message):
@@ -110,19 +111,6 @@ class Message(Resource):
     @namespace.marshal_with(Message_model)
     def get(self, Message_id):
         '''Get a single message'''
-
-        return Message_example
-
-    @namespace.response(400, 'Message with the given name already exists')
-    @namespace.response(404, 'Message not found')
-    @namespace.response(500, 'Internal Server error')
-    @namespace.expect(Message_model, validate=True)
-    @namespace.marshal_with(Message_model)
-    def put(self, Message_id):
-        '''Update Message information'''
-
-        if request.json['name'] == 'Message name':
-            namespace.abort(400, 'Message with the given name already exists')
 
         return Message_example
 
