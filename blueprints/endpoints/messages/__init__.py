@@ -104,20 +104,52 @@ class messages(Resource):
 
 @namespace.route('/<string:Message_id>')
 class Message(Resource):
-    '''Read, update and delete a specific Message'''
+    '''Read or delete a specific Message'''
 
+    @namespace.response(400, 'Invalid message uuid')
     @namespace.response(404, 'Message not found')
     @namespace.response(500, 'Internal Server error')
     @namespace.marshal_with(Message_model)
     def get(self, Message_id):
-        '''Get a single message'''
+        '''Get a single message by uuid'''
 
-        return Message_example
+        if not uuid.is_valid_uuid(Message_id, version=4):
+            namespace.abort(400, 'Invalid message uuid')
+
+        try:
+            query = table.get_item(
+                Key={
+                    'uuid': Message_id
+                }
+            )
+        except Exception as err:
+            namespace.abort(500, 'Internal Server error')
+        else:
+            if not 'Item' in query:
+                namespace.abort(400, 'Message not found')
+            else:
+                Message = query['Item']
+                return {
+                    'uuid': Message['uuid'],
+                    'timestamp': int(Message['timestamp']),
+                    'text': Message['text']
+                }, 200
+
 
     @namespace.response(204, 'Request Success (No Content)')
-    @namespace.response(404, 'Message not found')
     @namespace.response(500, 'Internal Server error')
     def delete(self, Message_id):
         '''Delete a specific Message'''
+        if not uuid.is_valid_uuid(Message_id, version=4):
+            namespace.abort(400, 'Invalid message uuid')
 
-        return '', 204
+        try:
+            query = table.delete_item(
+                Key={
+                    'uuid': Message_id
+                }
+            )
+        except Exception as err:
+            namespace.abort(500, 'Internal Server error')
+        else:
+            return '', 204
