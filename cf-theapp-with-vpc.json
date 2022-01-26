@@ -350,7 +350,7 @@
           "WriteCapacityUnits": 0
         },
         "BillingMode": "PAY_PER_REQUEST",
-        "TableName": "requests"
+        "TableName": { "Ref" : "DynamoTableName"}
       }
     },
 
