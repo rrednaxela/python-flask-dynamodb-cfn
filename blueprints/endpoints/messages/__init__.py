@@ -121,7 +121,7 @@ class Message(Resource):
     def get(self, Message_id):
         '''Get a single message by uuid'''
 
-        if not uuid.is_valid_uuid(Message_id, version=4):
+        if not is_valid_uuid(Message_id, version=4):
             namespace.abort(400, 'Invalid message uuid')
 
         try:
@@ -148,7 +148,7 @@ class Message(Resource):
     @namespace.response(500, 'Internal Server error')
     def delete(self, Message_id):
         '''Delete a specific Message'''
-        if not uuid.is_valid_uuid(Message_id, version=4):
+        if not is_valid_uuid(Message_id, version=4):
             namespace.abort(400, 'Invalid message uuid')
 
         try:
