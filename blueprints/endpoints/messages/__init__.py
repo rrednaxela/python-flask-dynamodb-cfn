@@ -21,7 +21,16 @@ session = boto3.Session(
 dynamodb = session.resource('dynamodb')
 table = dynamodb.Table(table_name)
 
+#uuid helper
+def is_valid_uuid(value):
+    try:
+        uuid.UUID(value)
+ 
+        return True
+    except ValueError:
+        return False
 
+#create message db method
 def put_request(message):
     the_id = str(uuid.uuid4())
     timestamp = int(time.time())
@@ -34,6 +43,7 @@ def put_request(message):
     )
     return {'uuid': the_id, 'timestamp': timestamp, 'text': message}
 
+#cerate a test message
 result = put_request("hello world from ec2")
 
 
@@ -65,8 +75,6 @@ Message_list_model = namespace.model('MessageList', {
         description='Total number of messages',
     ),
 })
-
-Message_example = {'uuid': '7d39c434-f6ee-4ec1-b067-2ae7cccc07a8', 'timestamp': 1643141109, 'text': 'hello world from aws'}
 
 @namespace.route('')
 class messages(Resource):
