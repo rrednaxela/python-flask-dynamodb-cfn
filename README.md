@@ -5,7 +5,7 @@ A demo message API application written in Python, using flask. The application u
 ## Getting started
 * You need an AWS account and an access key / access secret for a user who can read/write from DynamoDB tables.
 * Create the cloudformation stack using the template cf-theapp-with-vpc.json
-* After the delpoyment is complete, the UI can be found at http://<hostname/IP>/api/doc
+* After the delpoyment is complete, the UI can be found at http://<hostname/IP>/api/doc - the full link can be found in the stack Outputs
 * The UI contains more information on the API capabilities
 
 ## About the clouformation template
